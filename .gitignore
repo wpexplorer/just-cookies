@@ -1,0 +1,10 @@
+node_modules/
+build/
+*.zip
+.DS_Store
+
+# Local tooling and working notes, not part of the plugin.
+.claude/
+HANDOFF.md
+.vscode/
+.idea/

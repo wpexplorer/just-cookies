@@ -1,0 +1,32 @@
+{
+  "name": "just-cookies",
+  "version": "1.0.0",
+  "description": "Cookie consent and third-party embed blocking for WordPress.",
+  "license": "GPL-2.0-or-later",
+  "files": [
+    "just-cookies.php",
+    "autoload.php",
+    "uninstall.php",
+    "wpml-config.xml",
+    "readme.txt",
+    "license.txt",
+    "includes",
+    "build"
+  ],
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint:js": "wp-scripts lint-js",
+    "plugin-zip": "wp-scripts plugin-zip && zip -q -d just-cookies.zip just-cookies/package.json"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.0.0"
+  },
+  "dependencies": {
+    "@wordpress/api-fetch": "*",
+    "@wordpress/components": "*",
+    "@wordpress/element": "*",
+    "@wordpress/i18n": "*",
+    "vanilla-cookieconsent": "^3.1.0"
+  }
+}

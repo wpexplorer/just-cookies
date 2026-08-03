@@ -1,0 +1,26 @@
+<wpml-config>
+	<admin-texts>
+		<key name="just_cookies_settings">
+			<key name="banner_title" />
+			<key name="banner_description" />
+			<key name="banner_embeds_note" />
+			<key name="ack_button_label" />
+			<key name="embed_notice" />
+			<key name="float_button_label" />
+			<key name="policy_url" />
+			<key name="privacy_url" />
+			<key name="terms_url" />
+		</key>
+		<key name="just_cookies_network_settings">
+			<key name="banner_title" />
+			<key name="banner_description" />
+			<key name="banner_embeds_note" />
+			<key name="ack_button_label" />
+			<key name="embed_notice" />
+			<key name="float_button_label" />
+			<key name="policy_url" />
+			<key name="privacy_url" />
+			<key name="terms_url" />
+		</key>
+	</admin-texts>
+</wpml-config>

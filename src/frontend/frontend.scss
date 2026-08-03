@@ -1,0 +1,337 @@
+/**
+ * Front-end styles: blocked-embed placeholders and policy cookie tables.
+ * CookieConsent's own banner/modal CSS is imported separately.
+ */
+
+.just-cookies-embed {
+	position: relative;
+	min-height: 240px;
+	overflow: hidden;
+	background: #1b1b1f;
+	border-radius: 6px;
+	/* The placeholder sizes itself to whatever box it lands in — a full-width
+	   video or a card in a grid — so the overlay is measured against the
+	   placeholder rather than the viewport. Browsers without container query
+	   support keep the roomy layout below. */
+	container-type: inline-size;
+
+	iframe {
+		display: block;
+		width: 100%;
+		border: 0;
+	}
+}
+
+/**
+ * WPBakery sizes video and map widgets with aspect-ratio padding and positions
+ * the iframe absolutely inside it. The placeholder fills that same box rather
+ * than flattening it, so it inherits whichever ratio is set (16:9, 4:3, 2.35:1)
+ * and the embed loads at the height the placeholder already occupied.
+ */
+.wpb_video_widget .wpb_video_wrapper:has(.just-cookies-embed) .just-cookies-embed,
+.wpb_gmaps_widget.vc_map_responsive .wpb_map_wraper:has(.just-cookies-embed) .just-cookies-embed {
+	position: absolute;
+	inset: 0;
+	min-height: 0;
+}
+
+.just-cookies-embed__overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	padding: 24px;
+	text-align: center;
+	color: var( --wpex-white, #fff );
+	background:
+		radial-gradient(
+			120% 120% at 50% 0%,
+			rgba( 255, 255, 255, 0.06 ),
+			rgba( 0, 0, 0, 0 )
+		),
+		var( --wpex-black, #1b1b1f );
+}
+
+.just-cookies-embed__text {
+	margin: 0;
+	max-width: 46ch;
+	font-size: 14px;
+	line-height: 1.5;
+	opacity: 0.92;
+}
+
+.just-cookies-embed__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+}
+
+.just-cookies-embed__load,
+.just-cookies-embed__prefs {
+	appearance: none;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1;
+	padding: 10px 16px;
+	border-radius: 4px;
+	border: 1px solid rgba( 255, 255, 255, 0.4 );
+	background: transparent;
+	color: #fff;
+	transition: background 0.15s ease, border-color 0.15s ease;
+
+	&:hover,
+	&:focus-visible {
+		background: rgba( 255, 255, 255, 0.12 );
+	}
+}
+
+.just-cookies-embed__load {
+	background: #fff;
+	color: #111;
+	border-color: #fff;
+
+	&:hover,
+	&:focus-visible {
+		background: #e9e9ec;
+	}
+}
+
+/* Narrow placeholder — a card in a grid, or a sidebar. Tighten before anything
+   is dropped. */
+@container (max-width: 400px) {
+	.just-cookies-embed__overlay {
+		gap: 10px;
+		padding: 14px;
+	}
+
+	.just-cookies-embed__text {
+		font-size: 13px;
+	}
+
+	.just-cookies-embed__load,
+	.just-cookies-embed__prefs {
+		padding: 8px 12px;
+		font-size: 13px;
+	}
+}
+
+/* Too narrow for the sentence to read as anything but a wall of text. It stays
+   in the accessibility tree — only its display is dropped — but with nothing
+   on screen naming the provider, "Load content" would be a consent click with
+   the explanation removed. Only the preferences button is left: it carries the
+   full disclosure, and accepting there restores the embed anyway. */
+@container (max-width: 260px) {
+	.just-cookies-embed__overlay {
+		gap: 8px;
+		padding: 10px;
+	}
+
+	.just-cookies-embed__text {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip-path: inset( 50% );
+		white-space: nowrap;
+	}
+
+	.just-cookies-embed__load {
+		display: none;
+	}
+
+	/* Now the only action, so it reads as the primary one. */
+	.just-cookies-embed__prefs {
+		background: #fff;
+		color: #111;
+		border-color: #fff;
+
+		&:hover,
+		&:focus-visible {
+			background: #e9e9ec;
+		}
+	}
+}
+
+/* Asks before a lightbox loads a provider, since there is no placeholder on
+   screen to explain why the click did nothing. */
+.just-cookies-ask {
+	position: fixed;
+	inset: 0;
+	/* Above the floating button, below CookieConsent's own modal. */
+	z-index: 2147483646;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background: rgba( 0, 0, 0, 0.6 );
+}
+
+.just-cookies-ask__box {
+	max-width: 440px;
+	width: 100%;
+	padding: 24px;
+	border-radius: 6px;
+	text-align: center;
+	color: var( --wpex-white, #fff );
+	background: var( --wpex-black, #1b1b1f );
+	box-shadow: 0 10px 40px rgba( 0, 0, 0, 0.4 );
+}
+
+.just-cookies-ask__text {
+	margin: 0 0 18px;
+	font-size: 14px;
+	line-height: 1.5;
+	opacity: 0.92;
+}
+
+.just-cookies-ask__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+}
+
+.just-cookies-ask__load,
+.just-cookies-ask__prefs,
+.just-cookies-ask__cancel {
+	appearance: none;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1;
+	padding: 10px 16px;
+	border-radius: 4px;
+	border: 1px solid rgba( 255, 255, 255, 0.4 );
+	background: transparent;
+	color: #fff;
+	transition: background 0.15s ease, border-color 0.15s ease;
+
+	&:hover,
+	&:focus-visible {
+		background: rgba( 255, 255, 255, 0.12 );
+	}
+}
+
+.just-cookies-ask__load {
+	background: #fff;
+	color: #111;
+	border-color: #fff;
+
+	&:hover,
+	&:focus-visible {
+		background: #e9e9ec;
+	}
+}
+
+/* Wider preferences modal so the cookie-table descriptions are readable. */
+#cc-main .pm--box {
+	max-width: 52em;
+}
+
+/* Reserve the scrollbar gutter so expanding a category doesn't reflow/jump. */
+#cc-main .pm__body {
+	scrollbar-gutter: stable;
+}
+
+/* Larger banner title when the page-lock overlay is active. */
+.disable--interaction #cc-main .cm__title {
+	font-size: 20px;
+}
+
+/* Stop the section toggle from selecting its own label text on click. */
+#cc-main .pm__section-title-wrapper,
+#cc-main .pm__section-title {
+	user-select: none;
+}
+
+/* Floating button that reopens the preferences modal. */
+.just-cookies-cookie-btn {
+	position: fixed;
+	/* Above page content, below the overlays themes stack from ~1050 up:
+	   sticky bars, off-canvas menus, modals. Settable per site. */
+	z-index: 1000;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 10px 16px;
+	cursor: pointer;
+	appearance: none;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1;
+	border: 0;
+	border-radius: 999px;
+	color: var( --wpex-white, #fff );
+	background: var( --wpex-black, #1b1b1f );
+	box-shadow: 0 4px 14px rgba( 0, 0, 0, 0.25 );
+	transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+
+	&:hover,
+	&:focus-visible {
+		transform: translateY( -2px );
+		box-shadow: 0 6px 20px rgba( 0, 0, 0, 0.32 );
+	}
+
+	&__icon {
+		flex: none;
+	}
+
+	/* Corner placement — logical props so left/right mirror in RTL. */
+	&.is-bottom-left {
+		inset-block-end: 20px;
+		inset-inline-start: 20px;
+	}
+	&.is-bottom-right {
+		inset-block-end: 20px;
+		inset-inline-end: 20px;
+	}
+}
+
+/* Hide the button while the consent/preferences modal, or the plugin's own
+   lightbox prompt, is open. */
+.cc--modal-open .just-cookies-cookie-btn,
+.just-cookies-ask-open .just-cookies-cookie-btn {
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* Cookie disclosure table (shortcode / policy page). */
+
+/* Scrolls the table rather than letting four columns crush the page. The
+   min-width is what makes it scroll instead of squashing; drop it in a child
+   theme to let the columns compress instead. */
+.just-cookies-cookie-table-wrap {
+	overflow-x: auto;
+
+	.just-cookies-cookie-table {
+		min-width: 480px;
+	}
+}
+
+.just-cookies-cookie-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0 0 2em;
+	font-size: 14px;
+
+	th,
+	td {
+		padding: 8px 10px;
+		border: 1px solid rgba( 0, 0, 0, 0.12 );
+		text-align: left;
+		vertical-align: top;
+	}
+
+	th {
+		background: rgba( 0, 0, 0, 0.04 );
+		font-weight: 600;
+	}
+}

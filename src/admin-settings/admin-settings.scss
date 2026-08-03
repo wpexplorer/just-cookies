@@ -1,0 +1,104 @@
+/**
+ * Admin settings panel spacing.
+ */
+#just-cookies-admin-root {
+	max-width: 720px;
+
+	.components-panel {
+		margin-top: 16px;
+	}
+
+	.just-cookies-tabs {
+		margin-top: 16px;
+
+		.components-tab-panel__tabs {
+			margin-bottom: 16px;
+		}
+	}
+
+	.just-cookies-tab-body {
+		background: #fff;
+		border: 1px solid #e0e0e0;
+		border-radius: 2px;
+		padding: 20px 16px 8px;
+
+		> p {
+			margin: 0 0 16px;
+			color: #757575;
+		}
+
+		hr {
+			margin: 0 0 16px;
+			border: 0;
+			border-top: 1px solid #e0e0e0;
+		}
+
+		// Overrides the component's own margins, which differ by status.
+		.components-notice {
+			margin: 0 0 16px;
+		}
+	}
+
+	.components-base-control {
+		margin-bottom: 16px;
+	}
+
+	/* A setting that belongs to the toggle above it. */
+	.just-cookies-nested {
+		margin-left: 8px;
+		padding-left: 16px;
+		border-left: 2px solid #e0e0e0;
+	}
+
+	.just-cookies-actions {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-top: 16px;
+	}
+
+	.just-cookies-help {
+		h3 {
+			margin: 24px 0 8px;
+			font-size: 15px;
+		}
+
+		p,
+		li {
+			margin: 0 0 8px;
+			color: #3c434a;
+		}
+
+		ul {
+			margin: 0 0 8px 20px;
+			list-style: disc;
+		}
+
+		code {
+			font-size: 12px;
+		}
+
+		// Nested rather than &__credit so it outranks the p rule above.
+		.just-cookies-help__credit {
+			margin-top: 24px;
+			padding-top: 12px;
+			padding-bottom: 8px;
+			border-top: 1px solid #e0e0e0;
+			color: #757575;
+			font-size: 12px;
+		}
+	}
+
+	.just-cookies-color-field {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		.components-button .component-color-indicator,
+		.components-button .components-color-indicator {
+			margin-right: 6px;
+		}
+	}
+
+}
+
