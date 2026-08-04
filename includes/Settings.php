@@ -68,7 +68,8 @@ class Settings {
 			'banner_description'         => '',
 			'ack_button_label'           => '',
 			'banner_embeds_note'         => '',
-			// Optional closing section in the preferences popup. Blank = omitted.
+			// Optional closing section in the preferences popup.
+			'prefs_extra'                => false,
 			'prefs_extra_title'          => '',
 			'prefs_extra_text'           => '',
 			'disclose_cloudflare'        => false,
@@ -205,6 +206,7 @@ class Settings {
 			'banner_description'         => array( 'type' => 'string' ),
 			'ack_button_label'           => array( 'type' => 'string' ),
 			'banner_embeds_note'         => array( 'type' => 'string' ),
+			'prefs_extra'                => array( 'type' => 'boolean' ),
 			'prefs_extra_title'          => array( 'type' => 'string' ),
 			'prefs_extra_text'           => array( 'type' => 'string' ),
 			'disclose_cloudflare'        => array( 'type' => 'boolean' ),
@@ -262,6 +264,9 @@ class Settings {
 			'float_button_bg',
 			'float_button_color',
 			'float_button_z_index',
+			'prefs_extra',
+			'prefs_extra_title',
+			'prefs_extra_text',
 		);
 
 		// When the network doesn't own the policy pages, each site links its own.
@@ -398,6 +403,7 @@ class Settings {
 				case 'enabled':
 				case 'network_lock_site_settings':
 				case 'banner_links_new_tab':
+				case 'prefs_extra':
 				case 'network_policy_pages':
 				case 'lock_overlay':
 				case 'dark_mode':

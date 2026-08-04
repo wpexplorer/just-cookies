@@ -302,8 +302,10 @@ class ConsentConfig {
 		}
 
 		// Closing section with no category of its own — a contact address, a
-		// link to a fuller policy. Rendered only when the site writes one.
-		$extra_text = wp_kses_post( (string) $this->settings->get( 'prefs_extra_text' ) );
+		// link to a fuller policy. Per site, so each can name its own contact.
+		$extra_text = $this->settings->get( 'prefs_extra' )
+			? wp_kses_post( (string) $this->settings->get( 'prefs_extra_text' ) )
+			: '';
 
 		if ( $extra_text ) {
 			$sections[] = array(

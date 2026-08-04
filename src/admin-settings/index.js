@@ -435,18 +435,27 @@ function App() {
 
 			<hr />
 
-			<TextControl
-				label={ __( 'Extra section heading', 'just-cookies' ) }
-				help={ __( 'Adds a closing section to the preferences popup, below the cookie categories. Leave both fields empty to leave it out.', 'just-cookies' ) }
-				value={ txt( 'prefs_extra_title' ) }
-				onChange={ set( 'prefs_extra_title' ) }
+			<ToggleControl
+				label={ __( 'Add an extra section to the preferences popup', 'just-cookies' ) }
+				help={ __( 'A closing section below the cookie categories, for a contact address or a link to a fuller policy.', 'just-cookies' ) }
+				checked={ !! eff( 'prefs_extra' ) }
+				onChange={ set( 'prefs_extra' ) }
 			/>
-			<TextareaControl
-				label={ __( 'Extra section text', 'just-cookies' ) }
-				help={ __( 'Accepts HTML, so you can link to a fuller policy or a contact page.', 'just-cookies' ) }
-				value={ txt( 'prefs_extra_text' ) }
-				onChange={ set( 'prefs_extra_text' ) }
-			/>
+			{ !! eff( 'prefs_extra' ) && (
+				<>
+					<TextControl
+						label={ __( 'Extra section heading', 'just-cookies' ) }
+						value={ txt( 'prefs_extra_title' ) }
+						onChange={ set( 'prefs_extra_title' ) }
+					/>
+					<TextareaControl
+						label={ __( 'Extra section text', 'just-cookies' ) }
+						help={ __( 'Accepts HTML, so you can link to a fuller policy or a contact page.', 'just-cookies' ) }
+						value={ txt( 'prefs_extra_text' ) }
+						onChange={ set( 'prefs_extra_text' ) }
+					/>
+				</>
+			) }
 
 			<hr />
 
