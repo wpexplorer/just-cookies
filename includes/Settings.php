@@ -113,7 +113,7 @@ class Settings {
 			// gating is switched on, so the wording follows the mode. Either
 			// can be replaced under Banner.
 			'banner_description' => $this->has_optional_categories()
-				? __( 'We use essential cookies to make this site work. Anything optional is listed below and is only used if you accept it.', 'just-cookies' )
+				? __( 'We use essential cookies to make this site work. Anything optional is only used if you accept it.', 'just-cookies' )
 				: __( 'We use only essential cookies required for this site to function — no analytics, advertising, or tracking cookies.', 'just-cookies' ),
 			'ack_button_label'   => __( 'Got it', 'just-cookies' ),
 			// Same voice as banner_description, which this is appended to.
