@@ -111,7 +111,7 @@ class Settings {
 			// One sentence that holds whatever is switched on, rather than
 			// wording assembled from the settings. A site wanting to describe
 			// its own setup replaces the whole thing under Banner.
-			'banner_description' => __( 'This site uses cookies to work properly. Anything optional is only used with your consent.', 'just-cookies' ),
+			'banner_description' => __( 'This site uses cookies to work properly. Anything optional waits until you accept it.', 'just-cookies' ),
 			'ack_button_label'   => __( 'Got it', 'just-cookies' ),
 			'embed_notice'       => __( 'This content is hosted by {provider}. Loading it may set cookies. Accept to view.', 'just-cookies' ),
 			// With nothing to set, the popup is a disclosure rather than a
