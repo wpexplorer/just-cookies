@@ -112,7 +112,7 @@ class Shortcodes {
 			'just_cookies_table'
 		);
 
-		$titles = ! in_array(
+		$show_titles = ! in_array(
 			strtolower( trim( (string) $atts['titles'] ) ),
 			array( 'no', 'false', '0', 'off' ),
 			true
@@ -120,18 +120,19 @@ class Shortcodes {
 
 		$tag     = $this->heading_tag( $atts['title_tag'] );
 		$headers = $this->tables->headers();
+		$titles  = $this->tables->category_titles();
 
 		$groups = array(
-			__( 'Strictly Necessary Cookies', 'just-cookies' ) => $this->tables->necessary_rows(),
+			$titles['necessary'] => $this->tables->necessary_rows(),
 		);
 
 		if ( $this->settings->get( 'block_analytics' ) ) {
-			$groups[ __( 'Analytics Cookies', 'just-cookies' ) ] = $this->tables->analytics_rows();
+			$groups[ $titles[ Analytics::CATEGORY ] ] = $this->tables->analytics_rows();
 		}
 
 		$embed_rows = $this->tables->embed_rows();
 		if ( $embed_rows ) {
-			$groups[ __( 'Embedded Media', 'just-cookies' ) ] = $embed_rows;
+			$groups[ $titles[ ConsentConfig::EMBED_CATEGORY ] ] = $embed_rows;
 		}
 
 		$out = '<div class="just-cookies-cookie-tables">';
@@ -139,7 +140,7 @@ class Shortcodes {
 		foreach ( $groups as $title => $rows ) {
 			$heading = tag_escape( $tag );
 
-			$out .= $titles
+			$out .= $show_titles
 				? '<' . $heading . '>' . esc_html( $title ) . '</' . $heading . '>'
 				: '';
 

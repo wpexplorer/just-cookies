@@ -66,9 +66,9 @@ If one of these sets a cookie we are not disclosing, or you would like another p
 
 = For developers =
 
-The plugin is built to be extended rather than forked. Eighteen filters cover the parts a theme or another plugin is most likely to need:
+The plugin is built to be extended rather than forked. Nineteen filters cover the parts a theme or another plugin is most likely to need:
 
-* **Disclosures** — add or change cookie rows with `just_cookies_necessary_rows`, `just_cookies_analytics_rows` and `just_cookies_embed_rows`, or register a whole plugin with `just_cookies_integrations` so its cookies are disclosed automatically whenever it is active.
+* **Disclosures** — add or change cookie rows with `just_cookies_necessary_rows`, `just_cookies_analytics_rows` and `just_cookies_embed_rows`, rename a category with `just_cookies_category_titles`, or register a whole plugin with `just_cookies_integrations` so its cookies are disclosed automatically whenever it is active.
 * **Embed blocking** — `just_cookies_embed_content_filters` changes where embeds are looked for, `just_cookies_embed_providers` changes which services are offered on the settings screen, `just_cookies_provider_labels` renames them in the preferences popup, and `just_cookies_lightbox_selectors` adds the class your theme puts on a lightbox link.
 * **Analytics gating** — `just_cookies_analytics_buffer_hooks` changes where trackers are looked for, `just_cookies_analytics_script_patterns` and `just_cookies_analytics_inline_patterns` change what counts as one, and `just_cookies_analytics_clear_cookies` changes which cookies are deleted when consent is withdrawn.
 * **The banner itself** — `just_cookies_consent_config` hands you the complete consent configuration before it reaches the browser, so categories, wording and behavior can all be adjusted, and `just_cookies_default_url` and `just_cookies_policy_slugs` change how a policy page is found and resolved.

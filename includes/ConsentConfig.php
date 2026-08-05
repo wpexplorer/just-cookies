@@ -252,13 +252,15 @@ class ConsentConfig {
 			? __( 'Necessary cookies keep the site working and are always on. Optional embedded content from third parties loads only after you accept it.', 'just-cookies' )
 			: __( 'Necessary cookies keep the site working and are always on.', 'just-cookies' );
 
+		$titles = $this->tables->category_titles();
+
 		$sections = array(
 			array(
 				'title'       => __( 'Your Privacy', 'just-cookies' ),
 				'description' => $intro,
 			),
 			array(
-				'title'         => __( 'Strictly Necessary Cookies', 'just-cookies' ),
+				'title'         => $titles['necessary'],
 				'description'   => __( 'Required for the site to function. These cannot be switched off.', 'just-cookies' ),
 				'linkedCategory' => 'necessary',
 				'cookieTable'   => array(
@@ -270,7 +272,7 @@ class ConsentConfig {
 
 		if ( $this->settings->get( 'block_analytics' ) ) {
 			$sections[] = array(
-				'title'          => __( 'Analytics Cookies', 'just-cookies' ),
+				'title'          => $titles[ Analytics::CATEGORY ],
 				'description'    => __( 'Help us understand how visitors use the site. These are only set if you accept them.', 'just-cookies' ),
 				'linkedCategory' => Analytics::CATEGORY,
 				'cookieTable'    => array(
@@ -282,7 +284,7 @@ class ConsentConfig {
 
 		if ( $has_embeds ) {
 			$sections[] = array(
-				'title'         => __( 'Embedded Media', 'just-cookies' ),
+				'title'         => $titles[ self::EMBED_CATEGORY ],
 				'description'   => __( 'Videos, audio players and maps embedded from third-party services. These are blocked until you accept them.', 'just-cookies' ),
 				'linkedCategory' => self::EMBED_CATEGORY,
 				'cookieTable'   => array(

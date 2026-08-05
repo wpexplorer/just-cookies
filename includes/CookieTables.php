@@ -32,6 +32,32 @@ class CookieTables {
 	}
 
 	/**
+	 * Headings for the consent categories, keyed by category.
+	 *
+	 * Shared by the preferences popup and the [just_cookies_table] shortcode so
+	 * a category cannot be called one thing in the popup and another in the
+	 * table on the same page — which is also why renaming one is a filter
+	 * rather than a shortcode attribute.
+	 *
+	 * @return string[]
+	 */
+	public function category_titles() {
+		/**
+		 * Filters the consent category headings.
+		 *
+		 * @param string[] $titles Headings keyed by category.
+		 */
+		return apply_filters(
+			'just_cookies_category_titles',
+			array(
+				'necessary'                    => __( 'Strictly Necessary Cookies', 'just-cookies' ),
+				Analytics::CATEGORY            => __( 'Analytics Cookies', 'just-cookies' ),
+				ConsentConfig::EMBED_CATEGORY  => __( 'Embedded Media', 'just-cookies' ),
+			)
+		);
+	}
+
+	/**
 	 * Column labels for cookie tables.
 	 *
 	 * @return array
