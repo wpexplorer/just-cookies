@@ -109,7 +109,12 @@ class Settings {
 	private function default_text() {
 		return array(
 			'banner_title'       => __( 'We use cookies', 'just-cookies' ),
-			'banner_description' => __( 'We use only essential cookies required for this site to function — no analytics, advertising, or tracking cookies.', 'just-cookies' ),
+			// Claiming no analytics stops being true the moment analytics
+			// gating is switched on, so the wording follows the mode. Either
+			// can be replaced under Banner.
+			'banner_description' => $this->has_optional_categories()
+				? __( 'We use essential cookies to make this site work. Anything optional is listed below and is only used if you accept it.', 'just-cookies' )
+				: __( 'We use only essential cookies required for this site to function — no analytics, advertising, or tracking cookies.', 'just-cookies' ),
 			'ack_button_label'   => __( 'Got it', 'just-cookies' ),
 			// Same voice as banner_description, which this is appended to.
 			'banner_embeds_note' => __( 'With your consent, we also load embedded content (videos, audio and maps) from third-party services.', 'just-cookies' ),

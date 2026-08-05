@@ -248,8 +248,10 @@ class ConsentConfig {
 		$banner_title = wp_kses_post( $this->settings->text( 'banner_title' ) );
 		$ack_label    = wp_kses_post( $this->settings->text( 'ack_button_label' ) );
 
-		$intro = $has_embeds
-			? __( 'Necessary cookies keep the site working and are always on. Optional embedded content from third parties loads only after you accept it.', 'just-cookies' )
+		// Covers analytics as well as embeds, so gating analytics alone does not
+		// leave the popup describing a site with nothing optional on it.
+		$intro = $has_optional
+			? __( 'Necessary cookies keep the site working and are always on. Anything optional is only used after you accept it.', 'just-cookies' )
 			: __( 'Necessary cookies keep the site working and are always on.', 'just-cookies' );
 
 		$titles = $this->tables->category_titles();
