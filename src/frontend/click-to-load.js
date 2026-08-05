@@ -1,14 +1,17 @@
 /**
- * Holds lightbox video/map links until their provider is accepted.
+ * Holds embeds that a click would load, until their provider is accepted.
  *
- * A lightbox is given the provider's page URL and builds the iframe itself when
- * the link is clicked, so there is nothing in the markup for the server to
- * rewrite. The click is caught instead — in the capture phase, so it runs
- * before the lightbox library's own handler, whether that is delegated on
- * document or bound to the link.
+ * Two shapes, neither visible to the server-side rewriting because neither has
+ * a live src to take away:
  *
- * Only links carrying a lightbox marker are considered, so an ordinary link to
- * a YouTube channel still navigates.
+ *  - A lightbox link, given the provider's page URL, which builds the iframe in
+ *    the browser when clicked.
+ *  - A play overlay over an iframe whose URL is parked in data-src, which the
+ *    theme moves to src when clicked. Total's video shortcode does this.
+ *
+ * Both are caught at the click, in the capture phase, so this runs before the
+ * theme's own handler whether that is delegated on document or bound to the
+ * element.
  */
 
 let cookieConsent = null;
@@ -52,6 +55,41 @@ function isLightboxLink( link ) {
 			return false; // A bad selector from the filter must not break clicks.
 		}
 	} );
+}
+
+/**
+ * Provider behind an iframe this click would reveal, or empty string.
+ *
+ * A play overlay sits over an iframe whose URL waits in data-src, so the answer
+ * is on a sibling rather than on the thing clicked. Walking up from the control
+ * finds the wrapper holding both. Only controls are considered — a stray click
+ * beside a video is not a request to load it.
+ *
+ * @param {HTMLElement} target Clicked element.
+ * @return {string} Provider key.
+ */
+function deferredProvider( target ) {
+	const control = target.closest(
+		'button, a, [role="button"]'
+	);
+
+	if ( ! control ) {
+		return '';
+	}
+
+	let node = control;
+
+	while ( node && node !== document.body ) {
+		const iframe = node.querySelector && node.querySelector( 'iframe[data-src]' );
+
+		if ( iframe ) {
+			return matchProvider( iframe.getAttribute( 'data-src' ) );
+		}
+
+		node = node.parentElement;
+	}
+
+	return '';
 }
 
 /**
@@ -184,33 +222,42 @@ export function initLightbox( cc, data ) {
 
 	const labels = data.providerLabels || {};
 
-	if ( ! selectors.length || ! Object.keys( hosts ).length ) {
+	if ( ! Object.keys( hosts ).length ) {
 		return;
 	}
 
 	document.addEventListener(
 		'click',
 		( event ) => {
-			const link = event.target.closest
-				? event.target.closest( 'a[href]' )
-				: null;
-
-			if ( ! link || ! isLightboxLink( link ) ) {
+			if ( ! event.target.closest ) {
 				return;
 			}
 
-			const provider = matchProvider( link.getAttribute( 'href' ) );
+			const link = event.target.closest( 'a[href]' );
+
+			// A marked lightbox link, else a control over a parked iframe.
+			const provider =
+				link && isLightboxLink( link )
+					? matchProvider( link.getAttribute( 'href' ) )
+					: deferredProvider( event.target );
 
 			if ( ! provider || cc.acceptedService( provider, embedCategory ) ) {
 				return;
 			}
 
-			// Stop the lightbox opening, then ask. stopImmediatePropagation is
-			// what keeps a handler bound to the link itself from running.
+			// Stop the embed loading, then ask. stopImmediatePropagation is
+			// what keeps a handler bound to the element itself from running.
 			event.preventDefault();
 			event.stopImmediatePropagation();
 
-			pending = { link, provider };
+			// Replayed on consent: the link for a lightbox, otherwise the
+			// control that was clicked, so the theme's own handler runs then.
+			pending = {
+				link:
+					link ||
+					event.target.closest( 'button, a, [role="button"]' ),
+				provider,
+			};
 			openDialog( provider, labels[ provider ] || provider );
 		},
 		true

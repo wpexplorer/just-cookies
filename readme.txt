@@ -135,6 +135,8 @@ Two other limits worth knowing. Content a provider's own JavaScript API draws �
 
 Lightbox links are recognised by their class. Fancybox, Lity, GLightbox, Magnific Popup and Elementor's lightbox are covered out of the box; a theme using its own marker can add it with the `just_cookies_lightbox_selectors` filter.
 
+A play overlay over a video works too — the kind where the address waits in a `data-src` attribute until you click. The click is held and the same prompt appears, and once you accept, the overlay behaves as the theme intended.
+
 = Will it block analytics added by another plugin? =
 
 Often, but not always — it depends on where the script is printed rather than on who added it.

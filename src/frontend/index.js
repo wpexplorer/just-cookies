@@ -5,7 +5,7 @@ import * as CookieConsent from 'vanilla-cookieconsent';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import './frontend.scss';
 import { initEmbeds } from './embed-blocker';
-import { initLightbox, replayPending } from './lightbox-blocker';
+import { initLightbox, replayPending } from './click-to-load';
 
 const data = window.justCookiesData || {};
 const config = data.config || {};
