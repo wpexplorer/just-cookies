@@ -67,7 +67,6 @@ class Settings {
 			'banner_title'               => '',
 			'banner_description'         => '',
 			'ack_button_label'           => '',
-			'banner_embeds_note'         => '',
 			// Optional closing section in the preferences popup.
 			'prefs_extra'                => false,
 			'prefs_extra_title'          => '',
@@ -109,15 +108,11 @@ class Settings {
 	private function default_text() {
 		return array(
 			'banner_title'       => __( 'We use cookies', 'just-cookies' ),
-			// Claiming no analytics stops being true the moment analytics
-			// gating is switched on, so the wording follows the mode. Either
-			// can be replaced under Banner.
-			'banner_description' => $this->has_optional_categories()
-				? __( 'We use essential cookies to make this site work. Anything optional is only used if you accept it.', 'just-cookies' )
-				: __( 'We use only essential cookies required for this site to function — no analytics, advertising, or tracking cookies.', 'just-cookies' ),
+			// One sentence that holds whatever is switched on, rather than
+			// wording assembled from the settings. A site wanting to describe
+			// its own setup replaces the whole thing under Banner.
+			'banner_description' => __( 'This site uses cookies to work properly. Anything optional is only used with your consent.', 'just-cookies' ),
 			'ack_button_label'   => __( 'Got it', 'just-cookies' ),
-			// Same voice as banner_description, which this is appended to.
-			'banner_embeds_note' => __( 'With your consent, we also load embedded content (videos, audio and maps) from third-party services.', 'just-cookies' ),
 			'embed_notice'       => __( 'This content is hosted by {provider}. Loading it may set cookies. Accept to view.', 'just-cookies' ),
 			// With nothing to set, the popup is a disclosure rather than a
 			// preference screen, and its title says so too.
@@ -211,7 +206,6 @@ class Settings {
 			'banner_title'               => array( 'type' => 'string' ),
 			'banner_description'         => array( 'type' => 'string' ),
 			'ack_button_label'           => array( 'type' => 'string' ),
-			'banner_embeds_note'         => array( 'type' => 'string' ),
 			'prefs_extra'                => array( 'type' => 'boolean' ),
 			'prefs_extra_title'          => array( 'type' => 'string' ),
 			'prefs_extra_text'           => array( 'type' => 'string' ),
@@ -504,7 +498,6 @@ class Settings {
 
 				case 'prefs_extra_text':
 				case 'banner_description':
-				case 'banner_embeds_note':
 				case 'embed_notice':
 					$out[ $key ] = wp_kses_post( (string) $value );
 					break;

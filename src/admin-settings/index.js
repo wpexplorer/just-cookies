@@ -646,13 +646,6 @@ function App() {
 					) }
 					<hr />
 					<TextareaControl
-						label={ __( 'Banner text added when embeds are enabled', 'just-cookies' ) }
-						help={ __( 'Appended to the banner description while embed blocking is on.', 'just-cookies' ) }
-						value={ txt( 'banner_embeds_note' ) }
-						placeholder={ defaults.banner_embeds_note }
-						onChange={ set( 'banner_embeds_note' ) }
-					/>
-					<TextareaControl
 						label={ __( 'Placeholder notice ({provider} is replaced with the service name)', 'just-cookies' ) }
 						value={ txt( 'embed_notice' ) }
 						placeholder={ defaults.embed_notice }

@@ -238,12 +238,7 @@ class ConsentConfig {
 
 		$has_optional = $this->settings->has_optional_categories();
 
-		// The embeds note is appended only while blocking is on.
 		$description = wp_kses_post( $this->settings->text( 'banner_description' ) );
-		$note        = wp_kses_post( $this->settings->text( 'banner_embeds_note' ) );
-		if ( $has_embeds && $note ) {
-			$description = trim( $description . ' ' . $note );
-		}
 
 		$banner_title = wp_kses_post( $this->settings->text( 'banner_title' ) );
 		$ack_label    = wp_kses_post( $this->settings->text( 'ack_button_label' ) );
