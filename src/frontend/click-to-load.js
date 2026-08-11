@@ -18,6 +18,7 @@ let cookieConsent = null;
 let embedCategory = 'embeds';
 let hosts = {};
 let selectors = [];
+let wrappers = [];
 let strings = {};
 
 // The link held back, replayed once its provider is accepted.
@@ -58,38 +59,51 @@ function isLightboxLink( link ) {
 }
 
 /**
+ * Nearest lazy video wrapper around an element, or null.
+ *
+ * @param {HTMLElement} node Element to search up from.
+ * @return {HTMLElement|null} Wrapper element.
+ */
+function videoWrapper( node ) {
+	for ( const selector of wrappers ) {
+		let wrapper = null;
+
+		try {
+			wrapper = node.closest( selector );
+		} catch {
+			continue; // A bad selector from the filter must not break clicks.
+		}
+
+		if ( wrapper ) {
+			return wrapper;
+		}
+	}
+
+	return null;
+}
+
+/**
  * Provider behind an iframe this click would reveal, or empty string.
  *
  * A play overlay sits over an iframe whose URL waits in data-src, so the answer
- * is on a sibling rather than on the thing clicked. Walking up from the control
- * finds the wrapper holding both. Only controls are considered — a stray click
- * beside a video is not a request to load it.
+ * is on a sibling rather than on the thing clicked. The wrapper the theme puts
+ * around both is what ties them together. Only controls are considered — a
+ * stray click beside a video is not a request to load it.
  *
  * @param {HTMLElement} target Clicked element.
  * @return {string} Provider key.
  */
 function deferredProvider( target ) {
-	const control = target.closest(
-		'button, a, [role="button"]'
-	);
+	const control = target.closest( 'button, a, [role="button"]' );
 
 	if ( ! control ) {
 		return '';
 	}
 
-	let node = control;
+	const wrapper = videoWrapper( control );
+	const iframe = wrapper && wrapper.querySelector( 'iframe[data-src]' );
 
-	while ( node && node !== document.body ) {
-		const iframe = node.querySelector && node.querySelector( 'iframe[data-src]' );
-
-		if ( iframe ) {
-			return matchProvider( iframe.getAttribute( 'data-src' ) );
-		}
-
-		node = node.parentElement;
-	}
-
-	return '';
+	return iframe ? matchProvider( iframe.getAttribute( 'data-src' ) ) : '';
 }
 
 /**
@@ -213,6 +227,7 @@ export function initLightbox( cc, data ) {
 	embedCategory = data.embedCategory || 'embeds';
 	hosts = data.linkHosts || {};
 	selectors = data.lightboxSelectors || [];
+	wrappers = data.videoWrappers || [];
 	strings = {
 		notice: data.embedNotice || '',
 		load: ( data.i18n && data.i18n.load ) || 'Load content',

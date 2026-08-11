@@ -137,6 +137,7 @@ class ConsentConfig {
 			'embedCategory'     => self::EMBED_CATEGORY,
 			'linkHosts'         => (object) $link_hosts,
 			'lightboxSelectors' => $link_hosts ? Embeds::lightbox_selectors() : array(),
+			'videoWrappers'     => $link_hosts ? Embeds::video_wrappers() : array(),
 			// Same wording the inline placeholder uses, so a held lightbox link
 			// explains itself the same way.
 			'embedNotice'       => wp_kses_post( $s->text( 'embed_notice' ) ),

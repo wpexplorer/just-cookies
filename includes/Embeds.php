@@ -160,6 +160,32 @@ class Embeds {
 	}
 
 	/**
+	 * CSS selectors for wrappers holding a play overlay over a parked iframe.
+	 *
+	 * The iframe keeps its URL in data-src and has no src to take away, so the
+	 * click on the overlay is the only place to hold it. Clicks are only
+	 * inspected inside these wrappers; a theme with its own markup adds it
+	 * through the filter.
+	 *
+	 * @return string[]
+	 */
+	public static function video_wrappers() {
+		/**
+		 * Filters the selectors treated as lazy video wrappers.
+		 *
+		 * @param string[] $selectors CSS selectors.
+		 */
+		$selectors = apply_filters(
+			'just_cookies_video_wrappers',
+			array(
+				'.vcex-video',
+			)
+		);
+
+		return array_values( array_filter( array_map( 'strval', (array) $selectors ) ) );
+	}
+
+	/**
 	 * Filter hooks whose output is scanned for blockable content.
 	 *
 	 * Extendable for themes or plugins that render embeds through their own
